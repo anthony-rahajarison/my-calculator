@@ -20,6 +20,7 @@ def demander_expression():
     print("b. Soustraction")
     print("c. Multiplication")
     print("d. Division")
+    print("e. Exposant")
 
     while True:
         if keyboard.is_pressed("a"):
@@ -34,6 +35,10 @@ def demander_expression():
                 time.sleep(1)
                 demander_expression()
             return (nombre1, '/', nombre2)
+        if keyboard.is_pressed("e") :
+            return (nombre1, '**', nombre2)
+                
+
 
 def afficher_historique():
     print("\n=== Historique des calculs ===")
@@ -71,6 +76,10 @@ while True:
             res = float(expression[0]) * float(expression[2])
         elif expression[1] == '/':
             res = float(expression[0]) / float(expression[2])
+        elif expression[1] == '**':
+            res = 1
+            for i in range(1, int(expression[2])+1) :
+                res = res*int(expression[0])
         else:
             print("ERREUR")
             continue
