@@ -61,28 +61,33 @@ def afficher_historique():
     while True:
         
         if keyboard.is_pressed("s"):
-            time.sleep(1)
-            print("reinistialiser 'v' ou 'a' pour supprimer 1 calcul  ")
-        if keyboard.is_pressed("v"):
-            historique.clear()  
-            time.sleep(1)
-            menu()
-        if keyboard.is_pressed("a"):
-            try:
-                num_sup = int(input("Numéro du calcul à supprimer : "))
-                if num_sup < len(historique):
-                    print(f"Suppression du calcul : {historique[num_sup]}")
-                    historique.pop(num_sup)
-                    time.sleep(1.0)
-                    menu()
-                else:
-                    print("Numéro invalide.")
-            except ValueError:
-                print("Entrée invalide.")
+            time.sleep(0.5)
+            print("Réinitialiser 'v' ou 'a' pour supprimer 1 calcul  ")
+            while True:
+                if keyboard.is_pressed("a"):
+                    try:
+                        num_sup = int(input("Numéro du calcul à supprimer : ")) - 1
+                        if num_sup < len(historique):
+                            print(f"Suppression du calcul : {historique[num_sup]}")
+                            historique.pop(num_sup)
+                            time.sleep(0.5)
+                            return menu()
+                        else:
+                            print("Numéro invalide.")
+                            return afficher_historique()
+                    except ValueError:
+                        print("Entrée invalide.")
+
+                if keyboard.is_pressed("v"):
+                    historique.clear()
+                    time.sleep(1)
+                    return menu()
         if keyboard.is_pressed("p"):
             input("\nAppuyez sur Entrée pour revenir au menu principal.")
             keyboard.is_pressed("Enter")
             return menu()
+            
+
 
 def operation() :
     expression = demander_expression()
