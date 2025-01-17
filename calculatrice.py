@@ -19,14 +19,14 @@ def demander_expression():
     nombre1 = input("\nPremier nombre ? :\n")
     if not nombre1.replace(".", "", 1).isnumeric():
         print("L'opération est impossible (Pas un nombre)")
-        demander_expression()
+        return demander_expression()
 
     nombre2 = input("\nSecond nombre ? :\n")
     if not nombre2.replace(".", "", 1).isnumeric():
         print("L'opération est impossible (Pas un nombre)")
-        demander_expression()
+        return demander_expression()
 
-    print("\nSélectionner une opération :")
+    print("\nSélectionner une opération : ")
     print("a. Addition")
     print("b. Soustraction")
     print("c. Multiplication")
@@ -54,16 +54,32 @@ def afficher_historique():
     if not historique:
         print("Aucun calcul effectué pour le moment.")
     else:
-        for i, calcul in enumerate(historique,start=1):
-            print(f"{i}. {calcul}")
+        for num, calcul in enumerate(historique,start=1):
+            print(f"{num}. {calcul}")
 
-    print("si vous voulez reintialiser appuyer sur 'S' sinon appuyez sur 'P'.")
+    print("si vous voulez reintialiser/supprimer appuyer sur 'S' sinon appuyez sur 'P'.")
     while True:
+        
         if keyboard.is_pressed("s"):
+            time.sleep(1)
+            print("reinistialiser 'v' ou 'a' pour supprimer 1 calcul  ")
+        if keyboard.is_pressed("v"):
             historique.clear()  
             time.sleep(1)
             menu()
-        elif keyboard.is_pressed("p"):
+        if keyboard.is_pressed("a"):
+            try:
+                num_sup = int(input("Numéro du calcul à supprimer : "))
+                if num_sup < len(historique):
+                    print(f"Suppression du calcul : {historique[num_sup]}")
+                    historique.pop(num_sup)
+                    time.sleep(1.0)
+                    menu()
+                else:
+                    print("Numéro invalide.")
+            except ValueError:
+                print("Entrée invalide.")
+        if keyboard.is_pressed("p"):
             input("\nAppuyez sur Entrée pour revenir au menu principal.")
             keyboard.is_pressed("Enter")
             return menu()
